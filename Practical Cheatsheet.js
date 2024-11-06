@@ -568,40 +568,7 @@ function quicksort(xs) {
         return append(quicksort(head(split_list)), pair(pivot, quicksort(tail(split_list))));
     }
 }
-// Quicksort lists destructive
-function d_partition(ptr, xs) {
-    let pivot = ptr;
-    let pre = ptr;
-    let curr = ptr;
-    while (curr !== tail(xs)) {
-        if (head(curr) < head(pivot)) {
-            const temp = head(curr);
-            pre = tail(pre);
-            set_head(curr, head(pre));
-            set_head(pre, temp);
-        }
-        curr = tail(curr);
-    }
-    const temp = head(pivot);
-    set_head(pivot, head(pre));
-    set_head(pre, temp);
-    return pre;
-}
-function d_quicksort(xs) {
-    function d_quicksort_helper(ptr, xs) {
-        if (is_null(ptr) || ptr === xs) {
-            return ptr;
-        }
-        const pivot = d_partition(ptr, xs);
-        d_quicksort_helper(ptr, pivot);
-        d_quicksort_helper(tail(pivot), xs);
-    }
-    if (is_null(xs) || is_null(tail(xs))) {
-        return xs;
-    } else {
-        return d_quicksort_helper(xs, tail(xs));
-    }
-}
+
 // Quicksort array destructive
 function swap(arr, i, j) {
     let temp = arr[i];
