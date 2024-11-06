@@ -655,3 +655,10 @@ function stream_map_optimized(f, s) {
                                       f, stream_tail(s)) ));
 }
 
+function stream_append_pickle() {
+    
+}
+
+function interleave_stream_append() {
+    
+}
