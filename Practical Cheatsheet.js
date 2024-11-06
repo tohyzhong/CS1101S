@@ -75,7 +75,30 @@ function accumulate_tree(f, op, initial, tree) {
 }
 
 
+function apply_values(xss, vals) { // preserve tree structure and modify values based on lst
+    if (is_null(xss)){
+        
+    } else if (!is_list(head(xss))){
+        while (!is_null(vals) && is_null(head(vals))){
+            vals = tail(vals);
+        }
+        set_head(xss, head(vals));
+        set_head(vals, null);
+        apply_values(tail(xss), tail(vals));
+    } else {
+        apply_values(head(xss), vals);
+        while (!is_null(vals) && is_null(head(vals))){
+            vals = tail(vals);
+        }
+        apply_values(tail(xss), vals);
+    }
+}
 
+function tree_reverse(xss) { // reverse tree and preserve tree structure
+    const reversed = reverse(flatten(xss));
+    apply_values(xss, reversed);
+    return xss;
+}
 
 
 
