@@ -2,7 +2,7 @@
 // makeup_amount, subset, permutation, count_pairs, coin_change
 // memoization
 // linear search, binary search, bubble, insertion, selection, merge, quicksort
-// streams
+// shorten_stream, scale_stream, mul_stream, add_stream, memo_fun(stream memo), stream_map_optimized
 function flatten_list (L) { // flatten list of lists
     function helper(elem, acc) {
         if (is_null(elem)) {
@@ -597,3 +597,61 @@ function quicksort_arr(A, low, high) {
 
 
 // STREAMS
+function shorten_stream(s, k) {
+    function helper(s, i) {
+        if (i === k || is_null(stream_tail(s))) {
+            return pair(head(s), () => null);
+        } else {
+            return pair(head(s), () => helper(stream_tail(s), i + 1));
+        }
+    }
+    return helper(s, 1);
+}
+
+function add_streams(s1, s2) {
+    return is_null(s1)
+        ? s2
+        : is_null(s2)
+        ? s1
+        : pair(head(s1) + head(s2),
+               () => add_streams(stream_tail(s1), 
+                                 stream_tail(s2)));
+}
+
+function mul_streams(s1, s2) {
+    return is_null(s1)
+        ? s2
+        : is_null(s2)
+        ? s1
+        : pair(head(s1) * head(s2),
+               () => mul_streams(stream_tail(s1), 
+                                 stream_tail(s2)));
+}
+
+function scale_stream(c, stream) {
+    return stream_map(x => c * x, stream);
+}
+
+function memo_fun(fun) { //memoized stream
+    let already_run = false;
+    let result = undefined;
+
+    function mfun() {
+        if (!already_run) {
+            result = fun();
+            already_run = true;
+            return result;
+        } else {
+            return result;
+        }
+    }
+    return mfun;
+}
+function stream_map_optimized(f, s) {
+    return is_null(s)
+           ? null
+           : pair(f(head(s)),
+                  memo_fun( () => stream_map_optimized(
+                                      f, stream_tail(s)) ));
+}
+
