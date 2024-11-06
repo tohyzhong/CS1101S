@@ -1,4 +1,4 @@
-// flatten_list, tree_map, count_tree, tree_sum, accumulate_tree, remove_duplicates, reverse_array
+// flatten_list, tree_map, count_tree, tree_sum, accumulate_tree, remove_duplicates, reverse_array, apply_values, tree_reverse
 // makeup_amount, subset, permutation, count_pairs, coin_change
 // memoization
 // linear search, binary search, bubble, insertion, selection, merge, quicksort
