@@ -3,6 +3,7 @@
 // memoization
 // linear search, binary search, bubble, insertion, selection, merge, quicksort
 // shorten_stream, scale_stream, mul_stream, add_stream, memo_fun(stream memo), stream_map_optimized
+// stream_append_pickle, interweave
 function flatten_list (L) { // flatten list of lists
     function helper(elem, acc) {
         if (is_null(elem)) {
@@ -655,10 +656,14 @@ function stream_map_optimized(f, s) {
                                       f, stream_tail(s)) ));
 }
 
-function stream_append_pickle() {
-    
+function stream_append_pickle(xs, ys) {
+    return is_null(xs)
+        ? ys()
+        : pair(head(xs),
+            () => stream_append_pickle(stream_tail(xs),
+            ys));
 }
 
-function interleave_stream_append() {
-    
+function interweave(s1, s2) {
+	return is_null(s1) ? s2 : pair(head(s1), () => interweave(s2, stream_tail(s1)));
 }
