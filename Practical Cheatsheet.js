@@ -570,14 +570,29 @@ function quicksort(xs) {
 }
 // Quicksort lists destructive
 function d_partition(ptr, xs) {
-    
+    let pivot = ptr;
+    let pre = ptr;
+    let curr = ptr;
+    while (curr !== tail(xs)) {
+        if (head(curr) < head(pivot)) {
+            const temp = head(curr);
+            pre = tail(pre);
+            set_head(curr, head(pre));
+            set_head(pre, temp);
+        }
+        curr = tail(curr);
+    }
+    const temp = head(pivot);
+    set_head(pivot, head(pre));
+    set_head(pre, temp);
+    return pre;
 }
 function d_quicksort(xs) {
     function d_quicksort_helper(ptr, xs) {
         if (is_null(ptr) || ptr === xs) {
             return ptr;
         }
-        let pivot = d_partition(ptr, xs);
+        const pivot = d_partition(ptr, xs);
         d_quicksort_helper(ptr, pivot);
         d_quicksort_helper(tail(pivot), xs);
     }
