@@ -569,7 +569,24 @@ function quicksort(xs) {
     }
 }
 // Quicksort lists destructive
-
+function d_partition(ptr, xs) {
+    
+}
+function d_quicksort(xs) {
+    function d_quicksort_helper(ptr, xs) {
+        if (is_null(ptr) || ptr === xs) {
+            return ptr;
+        }
+        let pivot = d_partition(ptr, xs);
+        d_quicksort_helper(ptr, pivot);
+        d_quicksort_helper(tail(pivot), xs);
+    }
+    if (is_null(xs) || is_null(tail(xs))) {
+        return xs;
+    } else {
+        return d_quicksort_helper(xs, tail(xs));
+    }
+}
 // Quicksort array destructive
 function swap(arr, i, j) {
     let temp = arr[i];
