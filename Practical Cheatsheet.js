@@ -568,6 +568,7 @@ function quicksort(xs) {
         return append(quicksort(head(split_list)), pair(pivot, quicksort(tail(split_list))));
     }
 }
+// Quicksort lists destructive
 
 // Quicksort array destructive
 function swap(arr, i, j) {
