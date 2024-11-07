@@ -246,7 +246,34 @@ function count_pairs(x) {
     return traverse(x);
 }
 
-
+function choose(n, r) {
+    const mem = [];
+    function read(n, k) {
+        return mem[n] === undefined
+               ? undefined
+               : mem[n][k];
+    }
+    function write(n, k, value) {
+        if (mem[n] === undefined) {
+            mem[n] = [];
+        }
+        mem[n][k] = value;
+    }
+    function helper(n, r) {
+        if (n < 0 || r < 0) {
+            return 0;
+        } else if (r === 0) {
+            return 1;
+        } else if (read(n, r) !== undefined) {
+            return read(n, r);
+        } else {
+            const value = helper(n - 1, r) + helper(n - 1, r - 1);
+            write(n, r, value);
+            return value;
+        }
+    }
+    return helper(n, r);
+}
 
 
 
