@@ -1,5 +1,7 @@
-// flatten_list, tree_map, count_tree, tree_sum, accumulate_tree, remove_duplicates, reverse_array, apply_values, tree_reverse
-// makeup_amount, subset, permutation, count_pairs, coin_change
+// flatten_list, tree_map, count_tree, tree_sum, accumulate_tree, apply_values, tree_reverse
+// remove_duplicates
+// makeup_amount, subset, permutation, count_pairs, coin_change, choose, combination
+// remove_duplicates, reverse_array
 // memoization
 // linear search, binary search, bubble, insertion, selection, merge, quicksort
 // shorten_stream, scale_stream, mul_stream, add_stream, memo_fun(stream memo), stream_map_optimized
@@ -95,7 +97,7 @@ function apply_values(xss, vals) { // preserve tree structure and modify values 
 }
 
 function tree_reverse(xss) { // reverse tree and preserve tree structure
-    const reversed = reverse(flatten(xss));
+    const reversed = reverse(flatten_list(xss));
     apply_values(xss, reversed);
     return xss;
 }
@@ -690,3 +692,18 @@ function stream_append_pickle(xs, ys) {
 function interweave(s1, s2) {
 	return is_null(s1) ? s2 : pair(head(s1), () => interweave(s2, stream_tail(s1)));
 }
+
+
+
+/*
+T(n) = O(1) + T(n-1)        O(n)
+T(n) = O(1) + 2T(n/2)       O(n)
+T(n) = O(n) + T(n/2)        O(n)
+T(n) = O(1) + T(n/2)        O(logn)
+T(n) = O(logn) + T(n-1)     O(n logn)
+T(n) = O(n) + 2T(n/2)       O(n logn)
+T(n) = O(n logn) + 2T(n/2)  O(n log^2 n)
+T(n) = O(n) + T(n-1)        O(n^2)
+T(n) = O(n^k) + T(n-1)      O(n^(k+1))
+T(n) = O(1) + 2T(n-1)       O(2^n)
+*/
