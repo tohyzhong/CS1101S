@@ -275,7 +275,17 @@ function choose(n, r) {
     return helper(n, r);
 }
 
-
+function combination(xs, r) {
+    if (r !== 0 && (is_null(xs)) || r < 0) {
+        return null;
+    } else if (r === 0) {
+        return list(null);
+    } else {
+        const no_choose = combination(tail(xs), r);
+        const choose = map(x => pair(head(xs), x), combination(tail(xs), r - 1));
+        return append(no_choose, choose);
+    }
+}
 
 // MEMOIZATION
 const mem = [];
