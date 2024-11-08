@@ -208,7 +208,16 @@ function makeup_amount(x, coins) {
 
 
 
-
+function array_to_list(arr) {
+    let len = array_length(arr);
+    let i = 0;
+    let xs = null;
+    while (i < len) {
+        xs = pair(arr[i], xs);
+        i = i + 1;
+    }
+    return reverse(xs);
+}
 
 
 function reverse_array(arr) {
