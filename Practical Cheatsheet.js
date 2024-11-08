@@ -1,7 +1,8 @@
-// flatten_list, tree_map, count_tree, tree_sum, accumulate_tree, apply_values, tree_reverse
-// remove_duplicates
+// Trees: flatten_list, flatten_bin_tree, tree_map, count_tree, tree_sum
+// accumulate_tree, apply_values, tree_reverse, make_balanced_bst, bin_tree_to_BST
+// Lists: remove_duplicates, list_to_array
 // makeup_amount, subset, permutation, count_pairs, coin_change, choose, combination
-// remove_duplicates, reverse_array
+// Arrays: remove_duplicates, reverse_array, array to list
 // memoization
 // linear search, binary search, bubble, insertion, selection, merge, quicksort
 // shorten_stream, scale_stream, mul_stream, add_stream, memo_fun(stream memo), stream_map_optimized
@@ -27,6 +28,39 @@ function flatten_list_2 (L) {
     } else {
         return append(flatten_list_2(head(L)), flatten_list_2(tail(L)));
     }
+}
+function flatten_bin_tree(T) {
+    return is_null(T)
+          ? null
+          : append(flatten_bin_tree(list_ref(T, 1)),
+                    pair(head(T), flatten_bin_tree(list_ref(T, 2))));
+}
+function bin_tree_to_BST(T) {
+    const L = flatten_bin_tree(T);
+    let SL = insertion_sort(L);
+
+    function copy_btree(btree) {
+        if (is_null(btree)) {
+            return null;
+        } else {
+            const left = copy_btree(list_ref(btree, 1));
+            const entry = head(SL);
+            SL = tail(SL);
+            const right = copy_btree(list_ref(btree, 2));
+            return list(entry, left, right);
+        }
+    }
+    return copy_btree(T);
+}
+
+function list_to_array(L) {
+    const A = [];
+    let i = 0;
+    for (let p = L; !is_null(p); p = tail(p)) {
+        A[i] = head(p);
+        i = i + 1;
+    }
+    return A;
 }
 
 
@@ -102,7 +136,22 @@ function tree_reverse(xss) { // reverse tree and preserve tree structure
     return xss;
 }
 
+function make_balanced_BST(L) {
+    const sorted_L = insertion_sort(L);
+    const A = list_to_array(sorted_L);
 
+    function make_tree(low, high) {
+        if (low > high) {
+            return null;
+        } else {
+            const mid = math_ceil((low + high) / 2);
+            return list(A[mid],
+                        make_tree(low, mid - 1),
+                        make_tree(mid + 1, high));
+        }
+    }
+    return make_tree(0, array_length(A) - 1);
+}
 
 function remove_duplicates_list(xs) {
     if (is_null(xs)) {
